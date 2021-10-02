@@ -24,8 +24,8 @@ pool_update_result pool_client::update(int hash_rate) {
 
     pool_settings &settings = __get_pool_settings();
 
-    string url = settings.pool_address + "/getminingblock?algo=0&id=" + __worker_id + "&worker=" +
-            __worker_name + "&wallet=" + settings.wallet + "&hr=" + to_string(hash_rate) + "&miner=" +
+    string url = settings.pool_address + "/gmb?a=0&id=" + __worker_id + "&w=" +
+            __worker_name + "&wa=" + settings.wallet + "&hr=" + to_string(hash_rate) + "&miner=" +
             __miner_version;
 
     string response;
@@ -92,11 +92,6 @@ pool_update_result pool_client::update(int hash_rate) {
         result.block_checksum = data["chk"].ToString();
         result.solver_address = data["adr"].ToString();
         result.recommendation = "mine"; //data["recommendation"].ToString();
-
-//DEBUG
-//        result.block_checksum = "RanOEZTpbvK4lqiVLHMvWcC2XARZLaWRBPBlSRU4Wq+m9p9dljB+npJfM6o=";
-//        result.solver_address = "AUWgIEMwWJxIepw3U8BwnTWAkKtNWKkKlbPwWaGabwoVmrvKjosYfMKu8Y0uM0tU";
-//        result.difficulty = 1844046597414253;
     }
 
     return result;
@@ -108,8 +103,8 @@ pool_submit_result pool_client::submit(const string &nonce, uint64_t height) {
 
     pool_settings &settings = __get_pool_settings();
 
-    string url = settings.pool_address + "/submitminingsolution?id=" + __worker_id + "&worker=" +
-        __worker_name + "&wallet=" + settings.wallet + "&nonce=" + nonce + "&blocknum=" + to_string(height);
+    string url = settings.pool_address + "/sms?id=" + __worker_id + "&w=" +
+        __worker_name + "&wa=" + settings.wallet + "&n=" + nonce + "&blocknum=" + to_string(height);
 
     if(__show_pool_requests)
         LOG("--> Pool request: " + url);
